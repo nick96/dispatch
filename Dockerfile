@@ -13,6 +13,12 @@ WORKDIR /build
 COPY . /build
 RUN make all
 
+
+FROM base as test
+RUN add-apt-repository ppa:snaipewastaken/ppa
+RUN apt-get update && apt-get install -y criterion-dev
+RUN make test
+
 FROM base as dispatchctld
 
 WORKDIR /dispatch

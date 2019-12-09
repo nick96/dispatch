@@ -1,24 +1,33 @@
+CFLAGS=-Wall -Werror
+
 BIN=bin
-DISPATCHCTLD=$(BIN)/dispatchctld
 DISPATCHD=$(BIN)/dispatchd
-DISPATCHCTLD_SRC=$(PWD)/dispatchctld
-DISPATCHD_SRC=$(PWD)/dispatchd
 
-all: dispatchd dispatchctld
 
-dispatchctld: dispatchctld_objs
-	$(CC) $(CFLAGS) -o "$(DISPATCHCTLD)" $(wildcard $(DISPATCHCTLD_SRC)/*.o) -lzmq -lczmq
+DISPATCHCTLD_SRC=$(shell find $(PWD)/dispatchd -name "*_test.c")
+DISPATCHCTLD_OBJ=$(patsubst %.c,%.o,$(DISPATCHD_TST_SRC))
 
-dispatchd: dispatchd_objs
-	$(CC) $(CFLAGS) -o "$(DISPATCHD)" $(wildcard $(DISPATCHD_SRC)/*.o) -lzmq -lczmq
+DISPATCHD_TST_SRC=$(shell find $(PWD)/dispatchd -name "*_test.c")
+DISPATCHD_TST_OBJ=$(patsubst %.c,%.o,$(DISPATTLD_TST_SRC))
 
-dispatchctld_objs:
-	$(MAKE) -C $(DISPATCHCTLD_SRC)
+all: build test
 
-dispatchd_objs:
-	$(MAKE) -C $(DISPATCHD_SRC)
+build: dispatchd dispatchctld
+
+dispatchctld:
+	$(MAKE) -C dispatchctld build
+
+dispatchd:
+	$(MAKE) -C dispatchd build
+
+dispatchctld-test:
+	$(MAKE) -C dispatchctld test
+
+dispatchd-test:
+	$(MAKE) -C dispatchd test
+
+test: dispatchctld-test dispatchd-test
 
 clean:
-	find -name *.o -delete
-	rm $(DISPATCHCTLD)
-	rm $(DISPATCHD)
+	$(MAKE) -C dispatchctld clean
+	$(MAKE) -C dispatchd clean
