@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <czmq.h>
 
 int main(int argc, char *argv[]) {
-  printf("Hello, World!");
+    int major, minor, patch;
+    zmq_version(&major, &minor, &patch);
+    printf("Using version %d.%d.%d of zmq\n", major, minor, patch);
 }

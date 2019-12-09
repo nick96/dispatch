@@ -1,6 +1,6 @@
 SRCS=$(wildcard *.c)
 OBJS=$(pathsubst %.c,%.d, $(SRCS))
-INC_PATH=-I$(PWD)/../static-libs/zmq/include
+CFLAGS=-I$(PWD)/static-libs/include -L$(PWD)/static-libs/lib
 
 all:
-	$(CC) $(CFLAGS) -c $(SRCS) $(INC_PATH)
+	$(CC) $(CFLAGS) -c $(SRCS) -lczmq -lzmq
