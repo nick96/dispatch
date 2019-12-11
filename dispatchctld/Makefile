@@ -1,8 +1,3 @@
-CFLAGS?=-Wall -Werror
-
-PKG_FLAGS=$(shell pkg-config --cflags --libs libczmq)
-TST_PKG_FLAGS=$(shell pkg-config --cflags --libs criterion)
-
 SRC=$(shell find $(CWD) -name "*.c" ! -name "*_test.c")
 OBJ=$(patsubst %.c,%.o,$(SRC))
 
@@ -15,12 +10,13 @@ BIN_TEST=dispatchctld-test
 all: test build
 
 build:
-	$(CC) $(PKG_FLAGS) $(CFLAGS) -c $(SRC)
-	$(CC) $(PKG_FLAGS) $(CFLGAS) -o $(BIN) $(OBJ)
+	$(CC) $(PKG_CONFIG_LIBZMQ) $(CFLAGS) -c $(SRC)
+	$(CC) $(PKG_CONFIG_LIBZMQ) $(CFLAGS) -o $(BIN) $(OBJ)
 
 test: build
-	$(CC) $(TST_PKG_FLAGS) $(CFLAGS) -c $(TST_SRC)
-	$(CC) $(TST_PKG_FLAGS) $(CFLAGS) -o $(BIN_TEST) $(TST_OBJ)
+	$(CC) $(PKG_CONFIG_CRITERION) $(CFLAGS) -c $(TST_SRC)
+	$(CC) $(PKG_CONFIG_CRITERION) $(CFLAGS) -o $(BIN_TEST) $(TST_OBJ)
+	./$(BIN_TEST)
 
 clean:
 	find . -name '*.o' -delete

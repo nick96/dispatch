@@ -1,14 +1,15 @@
-CFLAGS=-Wall -Werror
+export CFLAGS+=-Wall -Werror -Wextra\
+	-Wduplicated-cond \
+	-Wduplicated-branches \
+	-Wnull-dereference \
+	-Wshadow \
+	-Wformat=2 \
+	-Wuninitialized \
+	-Wimplicit-fallthrough \
+	-Wswitch-enum
 
-BIN=bin
-DISPATCHD=$(BIN)/dispatchd
-
-
-DISPATCHCTLD_SRC=$(shell find $(PWD)/dispatchd -name "*_test.c")
-DISPATCHCTLD_OBJ=$(patsubst %.c,%.o,$(DISPATCHD_TST_SRC))
-
-DISPATCHD_TST_SRC=$(shell find $(PWD)/dispatchd -name "*_test.c")
-DISPATCHD_TST_OBJ=$(patsubst %.c,%.o,$(DISPATTLD_TST_SRC))
+export PKG_CONFIG_LIBZMQ=$(shell pkg-config --cflags --libs libczmq)
+export PKG_CONFIG_CRITERION=$(shell pkg-config --cflags --libs criterion)
 
 all: build test
 
@@ -21,13 +22,15 @@ dispatchd:
 	$(MAKE) -C dispatchd build
 
 dispatchctld-test:
-	$(MAKE) -C dispatchctld test
+	CFLAGS="$(CFLAGS) -fsanitize=address -fsanitize=leak" $(MAKE) -C dispatchctld test
 
 dispatchd-test:
-	$(MAKE) -C dispatchd test
+	CFLAGS="$(CFLAGS) -fsanitize=address -fsanitize=leak" $(MAKE) -C dispatchd test
 
 test: dispatchctld-test dispatchd-test
 
 clean:
 	$(MAKE) -C dispatchctld clean
 	$(MAKE) -C dispatchd clean
+
+.PHONY: dispatchctld dispatchd
