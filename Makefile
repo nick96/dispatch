@@ -13,6 +13,11 @@ export PKG_CONFIG_CRITERION=$(shell pkg-config --cflags --libs criterion)
 
 all: build test
 
+check:
+	command -v pkg-config
+	pkg-config libczmq
+	pkg-config criterion
+
 build: dispatchd dispatchctld
 
 dispatchctld:
