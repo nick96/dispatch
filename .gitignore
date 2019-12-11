@@ -1,3 +1,9 @@
 bin/
 static-libs/
 *.o
+/dispatchd/dispatchd
+*.gcov
+*~
+/dispatchd/dispatchd-test
+/dispatchctld/dispatchctld
+/dispatchctld/dispatchctld-test
