@@ -7,3 +7,4 @@ static-libs/
 /dispatchd/dispatchd-test
 /dispatchctld/dispatchctld
 /dispatchctld/dispatchctld-test
+.ccls-cache/
