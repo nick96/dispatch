@@ -1,0 +1,11 @@
+[requires]
+zmq/4.3.2@bincrafters/stable
+msgpack/3.2.0@bincrafters/stable
+criterion/2.3.3@nspain/stable
+
+[generators]
+cmake
+
+[options]
+zmq:encryption=tweetnacl
+msgpack:header_only=True
