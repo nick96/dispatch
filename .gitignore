@@ -8,3 +8,5 @@ static-libs/
 /dispatchctld/dispatchctld
 /dispatchctld/dispatchctld-test
 .ccls-cache/
+build/
+/compile_commands.json
