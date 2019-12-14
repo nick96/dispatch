@@ -18,10 +18,8 @@ install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo python -m pip install --user conan; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then conan config install .conan; fi
 
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python --version; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install --upgrade pip; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install conan; fi
+    # - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
     - if [ "$TRAVIS_OS_NAME" = "windows" ]; then conan config install .conan; fi
 
 
