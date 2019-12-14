@@ -1,3 +1,0 @@
-conan-center: https://conan.bintray.com [Verify SSL: True]
-bincrafters: https://api.bintray.com/conan/bincrafters/public-conan [Verify SSL: True]
-nspain-conan: https://api.bintray.com/conan/nspain/conan [Verify SSL: True]
