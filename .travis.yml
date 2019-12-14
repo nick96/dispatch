@@ -16,7 +16,6 @@ arch:
 
 compiler:
   - gcc
-  - clang
 
 install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then python -m pip install --user conan; fi
