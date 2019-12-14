@@ -8,7 +8,6 @@ cache:
 
 os:
   - linux
-  - windows
 
 arch:
   - amd64
@@ -16,16 +15,11 @@ arch:
 
 compiler:
   - gcc
+  - clang
 
 install:
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then python -m pip install --user conan; fi
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then conan config install .conan; fi
-
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then export PATH="/c/Python38:/c/Python38/Scripts:$PATH"; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip3 install conan; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then conan config install .conan; fi
-
+    - python -m pip install --user conan
+    - conan config install .conan
 
 before_script:
   - mkdir build
