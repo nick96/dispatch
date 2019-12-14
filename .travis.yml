@@ -1,11 +1,10 @@
 language: c
-sudo: yes
 compiler:
   - gcc
   - clang
 
 install:
-  - pip install conan
+  - pip install --user conan
 
 script:
   - mkdir build
