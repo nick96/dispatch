@@ -1,6 +1,10 @@
 language: c
 sudo: required
 
+cache:
+  directories:
+    - $HOME/.conan/
+
 os:
   - linux
   - windows
