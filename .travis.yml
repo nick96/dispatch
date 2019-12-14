@@ -4,7 +4,7 @@ compiler:
   - clang
 
 install:
-  - python3 -m pip install --user conan
+  - pip install --user conan
 
 script:
   - mkdir build
