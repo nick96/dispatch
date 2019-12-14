@@ -1,9 +1,15 @@
 language: c
+
+os:
+  - linux
+  - windows
+
 compiler:
   - gcc
   - clang
 
 install:
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install pip; fi
   - pip install --user conan
   - conan config install .conan
 
