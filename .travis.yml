@@ -9,6 +9,7 @@ compiler:
   - clang
 
 install:
+  - echo "$TRAVIS_OS_NAME"
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python.exe -m ensurepip; fi
   - pip install --user conan
