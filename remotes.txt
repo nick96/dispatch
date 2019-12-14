@@ -1,4 +1,3 @@
-[1m[36mconan-center: https://conan.bintray.com [Verify SSL: True][0m
-[1m[36mbincrafters: https://api.bintray.com/conan/bincrafters/public-conan [Verify SSL: True][0m
-[1m[36mnspain-conan: https://api.bintray.com/conan/nspain/conan [Verify SSL: True][0m
-[0m
+conan-center: https://conan.bintray.com [Verify SSL: True]
+bincrafters: https://api.bintray.com/conan/bincrafters/public-conan [Verify SSL: True]
+nspain-conan: https://api.bintray.com/conan/nspain/conan [Verify SSL: True]
