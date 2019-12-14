@@ -17,8 +17,8 @@ install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then python -m pip install --user conan; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then conan config install .conan; fi
 
-    # - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip3 install conan; fi
     - if [ "$TRAVIS_OS_NAME" = "windows" ]; then conan config install .conan; fi
 
 
