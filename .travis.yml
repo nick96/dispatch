@@ -1,12 +1,23 @@
 language: c
 
-os:
-  - linux
-  - windows
+matrix:
+  include:
+    - os: linux
+      compiler:
+        - gcc
+        - clang
 
-compiler:
-  - gcc
-  - clang
+    - os: linux
+      arch: arm64
+      compiler:
+        - gcc
+        - clang
+
+    - os: windows
+      compiler:
+        - gcc
+        - clang
+
 
 install:
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install conan; fi
