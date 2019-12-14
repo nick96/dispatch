@@ -1,14 +1,16 @@
 &linux_install:
-  - python -m pip install --upgrade pip
-  - python -m pip install --user conan
-  - conan config install .conan
+  install:
+    - python -m pip install --upgrade pip
+    - python -m pip install --user conan
+    - conan config install .conan
 
 &windows_install:
-  - choco install python --version 3.8
-  - python --version
-  - python -m pip install --upgrade pip
-  - python -m pip install conan
-  - conan config install .conan
+  install:
+    - choco install python --version 3.8
+    - python --version
+    - python -m pip install --upgrade pip
+    - python -m pip install conan
+    - conan config install .conan
 
 language: c
 
@@ -18,23 +20,20 @@ matrix:
       compiler:
         - gcc
         - clang
-      install:
-        <<: linux_install
+      <<: linux_install
 
     - os: linux
       arch: arm64
       compiler:
         - gcc
         - clang
-      install:
-        <<: linux_install
+      <<: linux_install
 
     - os: windows
       compiler:
         - gcc
         - clang
-      install:
-        <<: windows_install
+      <<: windows_install
 
 
 before_script:
