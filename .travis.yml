@@ -13,15 +13,15 @@ compiler:
   - clang
 
 install:
-    - python -m pip install --upgrade pip
-    - python -m pip install --user conan
-    - conan config install .conan
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then python -m pip install --upgrade pip; fi
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then python -m pip install --user conan; fi
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then conan config install .conan; fi
 
-    - choco install python --version 3.8
-    - python --version
-    - python -m pip install --upgrade pip
-    - python -m pip install conan
-    - conan config install .conan
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python --version 3.8; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python --version; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install --upgrade pip; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install conan; fi
+    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then conan config install .conan; fi
 
 
 before_script:
