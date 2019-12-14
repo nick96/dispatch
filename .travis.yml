@@ -5,10 +5,14 @@ compiler:
 
 install:
   - pip install --user conan
+  - conan config install .conan
 
-script:
+before_script:
   - mkdir build
   - cd build
   - conan install ..
   - cmake ..
+
+script:
+  - make
   - make test
