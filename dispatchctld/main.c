@@ -9,6 +9,10 @@
 #include <zmq.h>
 #include <msgpack.h>
 
+#if defined(_WIN32) || defined(WIN32)
+#define WINDOWS_OS
+#endif
+
 const char *IPC_PATH_DEFAULT = "/tmp/dispatch/0";
 const char *LOG_FILE_DEFAULT = "stderr";
 const char *PID_FILE_DEFAULT = "/var/run/dispatch/dispatch.pid";
@@ -77,9 +81,11 @@ int setup_signal_handlers() {
     return 1;
   }
 
+#ifndef WINDOWS_OS
   if (signal(SIGHUP, handle_SIGHUP) == SIG_ERR) {
     return 1;
   }
+#endif
 
   return 0;
 }
