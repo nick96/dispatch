@@ -3,6 +3,10 @@ image: Visual Studio 2019
 
 shallow_clone: true
 
+cache:
+  - %USERPROFILE%\.conan -> conanfile.py
+  - %LOCALAPPDATA%\pip\Cache
+
 environment:
   PYTHON_HOME: "C:\\Python37"
 
