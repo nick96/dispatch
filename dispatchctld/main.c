@@ -6,10 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
 
 #include <zmq.h>
 #include <msgpack.h>
+
+#include "sig_handler.h"
 
 #if defined(_WIN32) || defined(WIN32)
 #define WINDOWS_OS
@@ -26,6 +27,7 @@ struct Args {
 
 void info(void);
 int setup_signal_handlers(void);
+int listen_for_cmds(void);
 
 int main(int argc, char *argv[]) {
     char *app_name = argv[0];
@@ -54,6 +56,9 @@ int main(int argc, char *argv[]) {
     if (setup_signal_handlers() != 0) {
       return EXIT_FAILURE;
     }
+
+
+    listen_for_cmds();
 }
 
 void info() {
@@ -65,28 +70,7 @@ void info() {
     printf("msgpack: v%s\n", MSGPACK_VERSION);
 }
 
-static void handle_SIGTERM(int signo) {
-  // TODO: Implement graceful shutoown as necessary
-  (void)signo;
-  exit(EXIT_FAILURE);
-}
 
-
-static void handle_SIGHUP(int signo) {
-   // TODO: Implement graceful shutoown as necessary
-  (void)signo;
-}
-
-int setup_signal_handlers() {
-  if (signal(SIGTERM, handle_SIGTERM) == SIG_ERR) {
-    return 1;
-  }
-
-#ifndef WINDOWS_OS
-  if (signal(SIGHUP, handle_SIGHUP) == SIG_ERR) {
-    return 1;
-  }
-#endif
-
+int listen_for_cmds() {
   return 0;
 }
