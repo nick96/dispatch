@@ -10,3 +10,4 @@ static-libs/
 .ccls-cache/
 build/
 /compile_commands.json
+/.mypy_cache/
