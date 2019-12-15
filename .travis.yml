@@ -6,16 +6,25 @@ cache:
     - $HOME/.conan/
     - $HOME/.cache/pip
 
-os:
-  - linux
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      env: CC=gcc ARCH=amd64
 
-arch:
-  - amd64
-  - arm64
+    - os: linux
+      compiler: clang
+      env: CC=clang ARCH=amd64
 
-compiler:
-  - gcc
-  - clang
+    - os: linux
+      arch: arm64
+      compiler: gcc
+      env: CC=gcc ARCH=arm64
+
+    - os: linux
+      arch: arm64
+      compiler: clang
+      env: CC=clang ARCH=arm64
 
 install:
     - python -m pip install --user conan
