@@ -1,0 +1,26 @@
+version: build-{build}
+
+shallow_clone: true
+
+environment:
+  PYTHON_HOME: "C:\\Python37"
+
+  CMAKE_GENERATOR: "Visual Studio 16 2019"
+  CONAN_VISUAL_VERSIONS: 16
+  CONAN_BUILD_TYPE: Release
+
+install:
+  - set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts;%PATH%
+  - pip.exe install conan
+
+before_build:
+  - md build
+  - cd build
+  - conan install --build missing ..
+  - cmake -G"%CMAKE_GENERATOR%" ..
+
+build_script:
+  - msbuild Dispatch.sln
+
+test_script:
+  - ctest
