@@ -45,14 +45,13 @@ int main(int argc, char *argv[]) {
         case 'h':
             info();
             return EXIT_FAILURE;
-        case 'c':
-            args.conf_file = strdup(optarg);
-            break;
+        default:
+          fprintf(stderr, "Unknown argument %s, ignoring\n", optarg);
         }
 
     }
 
-    if (setup_signal_handlers()) {
+    if (setup_signal_handlers() != 0) {
       return EXIT_FAILURE;
     }
 }
