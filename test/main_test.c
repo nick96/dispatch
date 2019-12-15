@@ -14,7 +14,7 @@ char *run_all_tests() {
     return 0;
 }
 
-int main(int argc, char *argv) {
+int main(int argc, char *argv[]) {
     char *res = run_all_tests();
     if (res) {
         printf("%s\n", res);
