@@ -1,15 +1,20 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <assert.h>
+#include <error.h>
 #include <getopt.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-#include <zmq.h>
 #include <msgpack.h>
+#include <zmq.h>
 
+#include "constants.h"
 #include "sig_handler.h"
 
 #if defined(_WIN32) || defined(WIN32)
@@ -21,25 +26,22 @@ const char *LOG_FILE_DEFAULT = "stderr";
 const char *PID_FILE_DEFAULT = "/var/run/dispatch/dispatch.pid";
 
 struct Args {
-    char *conf_file;
     int help;
 };
 
 void info(void);
 int setup_signal_handlers(void);
 int listen_for_cmds(void);
+int ensure_fifo_exists(char *path);
+void parent_path(char *path, char **parent);
 
 int main(int argc, char *argv[]) {
     char *app_name = argv[0];
     struct Args args = (struct Args){
-                              .conf_file = NULL,
-                              .help = 0,
+        .help = 0,
     };
-    static struct option long_opts[] = {
-        {"conf-file", optional_argument, 0, 'c'},
-        {"help", no_argument, 0, 'h'},
-        {0, 0, 0, 0}
-    };
+    static struct option long_opts[] = {{"help", no_argument, 0, 'h'},
+                                        {0, 0, 0, 0}};
     int value, option_index = 0;
     while ((value = getopt_long(argc, argv, "c::h", long_opts,
                                 &option_index)) != -1) {
@@ -48,15 +50,14 @@ int main(int argc, char *argv[]) {
             info();
             return EXIT_FAILURE;
         default:
-          fprintf(stderr, "Unknown argument %s, ignoring\n", optarg);
+            fprintf(stderr, "Unknown argument %s, ignoring\n", optarg);
         }
-
     }
 
     if (setup_signal_handlers() != 0) {
-      return EXIT_FAILURE;
+        fprintf(stderr, "Could not register signal handlers\n");
+        return EXIT_FAILURE;
     }
-
 
     listen_for_cmds();
 }
@@ -70,7 +71,51 @@ void info() {
     printf("msgpack: v%s\n", MSGPACK_VERSION);
 }
 
-
 int listen_for_cmds() {
-  return 0;
+    void *ctx = zmq_ctx_new();
+    void *resp_socket = zmq_socket(ctx, ZMQ_REP);
+
+    if (ensure_fifo_exists(CTL_ENDPOINT) != 0) {
+        fprintf(stderr, "Could not create fifo at %s: %s\n", CTL_ENDPOINT,
+                strerror(errno));
+        return 1;
+    }
+
+    if (zmq_bind(resp_socket, CTL_URI) != 0) {
+        fprintf(stderr, "Could not bind to controller endpoint %s: %s\n",
+                CTL_ENDPOINT, strerror(errno));
+        return 1;
+    }
+
+    char buf[2048];
+    char *resp_msg = "response from controller daemon";
+    while (true) {
+        zmq_recv(resp_socket, buf, 2048, 0);
+        printf("Received: %s\n", buf);
+        zmq_send(resp_socket, resp_msg, strlen(resp_msg), 0);
+    }
+    return 0;
+}
+
+int ensure_fifo_exists(char *path) {
+    char *parent;
+    parent_path(path, &parent);
+    if (access(parent, F_OK) == -1) {
+        if (mkdir(parent, 0666)) {
+          fprintf(stderr, "Could not create directory %s\n", parent);
+            return -1;
+        }
+    }
+    return mkfifo(path, 0666);
+}
+
+void parent_path(char *path, char **parent) {
+    char *slash = path, *next;
+    while ((next = strpbrk(slash + 1, "\\/"))) {
+        slash = next;
+    }
+    if (path != slash) {
+        slash++;
+    }
+    *parent = strndup(path, slash - path);
 }
