@@ -1,10 +1,16 @@
 Dispatch - A slurm-like job scheduler
 =========================================
 
-.. image:: https://travis-ci.com/nick96/dispatch.svg?branch=master
-    :target: https://travis-ci.com/nick96/dispatch
++---------+------------+
+| OS      |  Status    |
++=========+============+
+| *nix    | |travis|   |
+| Windows | |appveyor| |
++---------+------------+
 
-.. image:: https://ci.appveyor.com/api/projects/status/dj259ujw6p49x5ot?svg=true
+.. |travis| image:: https://travis-ci.com/nick96/dispatch.svg?branch=master
+
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/dj259ujw6p49x5ot?svg=true
 
 
 This is a fun project, not intended for actual use, to implement a subset of the
