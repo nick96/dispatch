@@ -1,8 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #if defined(WIN32) || defined(_WIN32)
-#include <windows.h>
-#include <direct.h>
+#include "windows_shim.h"
 #else
 #include <error.h>
 #include <unistd.h>
