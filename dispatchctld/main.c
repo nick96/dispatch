@@ -1,7 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 
-#include <assert.h>
+#if defined(WIN32) || defined(_WIN32)
+#include <windows.h>
+#else
 #include <error.h>
+#endif
+
 #include <getopt.h>
 #include <stdbool.h>
 #include <stdio.h>
