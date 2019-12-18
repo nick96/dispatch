@@ -1,5 +1,9 @@
 #define WIN32_LEAN_AND_MEAN
 
+#if defined(_WIN32) || defined(WIN32)
+#define WINDOWS_OS
+#endif
+
 #include <assert.h>
 #include <error.h>
 #include <getopt.h>
@@ -16,10 +20,6 @@
 
 #include "constants.h"
 #include "sig_handler.h"
-
-#if defined(_WIN32) || defined(WIN32)
-#define WINDOWS_OS
-#endif
 
 const char *IPC_PATH_DEFAULT = "/tmp/dispatch/0";
 const char *LOG_FILE_DEFAULT = "stderr";
