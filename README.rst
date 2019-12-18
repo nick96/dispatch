@@ -5,6 +5,7 @@ Dispatch - A slurm-like job scheduler
 | OS      |  Status    |
 +=========+============+
 | *nix    | |travis|   |
++---------+------------+
 | Windows | |appveyor| |
 +---------+------------+
 
