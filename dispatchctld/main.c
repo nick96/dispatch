@@ -2,8 +2,12 @@
 
 #if defined(WIN32) || defined(_WIN32)
 #include <windows.h>
+#include <direct.h>
 #else
 #include <error.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #endif
 
 #include <getopt.h>
@@ -11,9 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 #include <msgpack.h>
 #include <zmq.h>
