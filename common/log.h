@@ -4,7 +4,8 @@
 #ifdef DISABLE_LOG
 #define LOG(...) // Do nothing
 #else
-#define LOG(...) fprintf(stderr, ...)
+#include <stdio.h>
+#define LOG(...) fprintf(stderr, __VA_ARGS__)
 #endif
 
 #endif
