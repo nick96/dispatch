@@ -19,11 +19,5 @@ int setup_signal_handlers() {
         return 1;
     }
 
-#ifndef WINDOWS_OS
-    if (signal(SIGHUP, handle_SIGHUP) == SIG_ERR) {
-        return 1;
-    }
-#endif
-
     return 0;
 }

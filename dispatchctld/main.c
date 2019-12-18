@@ -1,9 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
 
-#if defined(_WIN32) || defined(WIN32)
-#define WINDOWS_OS
-#endif
-
 #include <assert.h>
 #include <error.h>
 #include <getopt.h>
@@ -102,7 +98,7 @@ int ensure_fifo_exists(char *path) {
     parent_path(path, &parent);
     if (access(parent, F_OK) == -1) {
         if (mkdir(parent, 0666)) {
-          fprintf(stderr, "Could not create directory %s\n", parent);
+            fprintf(stderr, "Could not create directory %s\n", parent);
             return -1;
         }
     }
